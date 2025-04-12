@@ -144,3 +144,19 @@ footer p {
     max-height: 500px;
     height: 40%;
 }
+
+/* Small NAV */
+
+#menu-wrapper {
+    position: absolute;
+    display: block;
+    left: 30px;
+    top: 30px;
+}
+
+#menu-wrapper button {
+    display: inline-block;
+    cursor: pointer;
+    background-color: var(--primary-color);
+    border: none;
+}
