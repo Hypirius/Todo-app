@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Condensed+One&family=Special+Gothic+Expanded+One&family=Varela&display=swap" rel="stylesheet">
+    <script src="./index.js" defer></script>
     <title>Hypirius Todo</title>
 </head>
 <body>
@@ -30,15 +31,21 @@
     <main id="main-container">
         <!-- Main tasks container -->
         <aside id="Tasks" class="block">
-            <h3>Tasks</h3> 
+            <h3>Tasks</h3>
+            
+            
             <form action="">
                 <input type="text" id="main-input" placeholder="Enter your task">
                 <button id="submit">Enter</button>
             </form>
+
             <div class="divider"></div>
-            <section id="undone-tasks">
-            </section>
+
+            <section id="undone-tasks"></section>
+
             <section id="completed-tasks"></section>
+
+
         </aside>
 
         <!-- Calendar section, using google calendar embed-->

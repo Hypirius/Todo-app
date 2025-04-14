@@ -34,8 +34,8 @@ input, button, form {
 }
 
 #main-container {
-    min-width: 500px;
-    max-width: 950px;
+    min-width: 550px;
+    max-width: 1000px;
     width: 60%;
     height: 650px;
     margin-bottom: 50px;
@@ -119,6 +119,7 @@ footer p {
 
 #Tasks {
     overflow-y: scroll;
+    overflow-x: hidden;
     min-width: 200px;
 }
 
@@ -127,6 +128,7 @@ footer p {
     font-size: 24px;
     letter-spacing: 2px;
     font-family: var(--lowerheading-font);
+    margin-bottom: 10px;
 }
 
 .divider {
@@ -138,7 +140,7 @@ footer p {
 }
 
 #undone-tasks {
-    padding-block: 10px;
+    padding-bottom: 10px;
     border-bottom: 5px solid var(--divider-color)
 }
 
@@ -173,6 +175,7 @@ footer p {
     border-radius: 8px;
     border: 1px solid var(--divider-color);
     padding-left: 5px;
+    margin-bottom: 5px;
 }
 
 #submit {
@@ -183,4 +186,20 @@ footer p {
     cursor: pointer;
     background-color: #FAFAFA;
     padding: 2px;
+}
+
+/* Classes for javascript usage */
+
+.parent-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.list-item {
+    list-style: none;
+    margin-left: 18px;
+    width: 80%;
+    text-wrap: wrap;
+    word-wrap:break-word
 }
