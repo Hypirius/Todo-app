@@ -28,6 +28,14 @@ function createParentContainer(parentContainer) {
   return parentDiv;
 }
 
+function removeDefaultMessage(className) {
+  if (className) {
+    removedElement = document.getElementsByClassName(className)[0];
+    console.log(removedElement);
+    removedElement.remove();
+  }
+}
+
 function createTasks(parentContainer, checkerBox, taskTextHolder) {
   const parentDiv = createParentContainer(parentContainer);
 
@@ -44,19 +52,20 @@ function createTasks(parentContainer, checkerBox, taskTextHolder) {
   parentDiv.append(checkBox, listItem);
   undoneTask.append(parentDiv);
 
+  removeDefaultMessage("task-message");
+
   persistLocalStorage(listItem, parentDiv);
 }
 
 function updateTasks(Target) {
   const parentContainer = Target.parentElement;
+  parentContainer.remove();
 
   if (Target.checked) {
-    parentContainer.remove();
     Target.setAttribute("data", "checked");
     persistLocalStorage(Target.nextElementSibling, parentContainer);
     completedTask.append(parentContainer);
   } else {
-    parentContainer.remove();
     Target.removeAttribute("data");
     persistLocalStorage(Target.nextElementSibling, parentContainer);
     undoneTask.append(parentContainer);
@@ -69,9 +78,7 @@ function persistLocalStorage(key, value) {
 }
 
 function sustainTasks() {
-  const localStorageArray = Object.values(localStorage);
-  localStorageArray.sort();
-  console.log(localStorageArray);
+  const localStorageArray = Object.values(localStorage).sort();
   localStorageArray.forEach((Item) => {
     const parentContainer = createParentContainer("div");
     parentContainer.innerHTML = Item;
@@ -99,17 +106,24 @@ const options = {
 fetch(url, options)
   .then((res) => res.json())
   .then(function (resObject) {
-    const quote = document.createElement("p");
-    quote.innerText = resObject.quote;
+    if (resObject.quote && resObject.author) {
+      const quote = document.createElement("p");
+      quote.innerText = resObject.quote;
 
-    const addressContainer = document.createElement("address");
-    addressContainer.classList.add("author");
+      const addressContainer = document.createElement("address");
+      addressContainer.classList.add("author");
 
-    const author = document.createElement("a");
-    author.setAttribute("rel", "author");
-    author.innerText = resObject.author;
+      const author = document.createElement("a");
+      author.setAttribute("rel", "author");
+      author.innerText = resObject.author;
 
-    addressContainer.append(author);
-    quote.append(addressContainer);
-    quoteContainer.append(quote);
+      addressContainer.append(author);
+      quote.append(addressContainer);
+      quoteContainer.append(quote);
+    } else {
+      const holder = document.createElement("p");
+      holder.innerText = "No quotes found.";
+
+      quoteContainer.append(holder);
+    }
   });

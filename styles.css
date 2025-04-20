@@ -204,6 +204,11 @@ footer p {
   word-wrap: break-word;
 }
 
+.task-message {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
 /* Quotes section */
 
 #Quotes {
