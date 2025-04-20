@@ -7,8 +7,12 @@ const quoteContainer = document.getElementById("Quotes");
 
 formSubmit.addEventListener("click", (form) => {
   form.preventDefault();
-  if (undoneTask.children.length < 10) {
+  if (undoneTask.children.length < 10 && validateInput(formInput)) {
     createTasks("div", "input", "li");
+  } else if (!validateInput(formInput)) {
+    alert(
+      "Tasks must be greater than 5 characters and must not contain only numbers"
+    );
   } else {
     alert("Complete your tasks first. (Max 10 tasks)");
   }
@@ -21,23 +25,33 @@ document.getElementById("Tasks").addEventListener("click", (clickObject) => {
 });
 
 sustainTasks();
+removeDefaultMessage();
+
+function validateInput(input) {
+  if (input.value.length > 5 && isNaN(input.value)) {
+    return true;
+  }
+  return false;
+}
 
 function createParentContainer(parentContainer) {
   const parentDiv = document.createElement(parentContainer);
-  parentDiv.classList.add("parent-container");
   return parentDiv;
 }
 
-function removeDefaultMessage(className) {
-  if (className) {
-    removedElement = document.getElementsByClassName(className)[0];
-    console.log(removedElement);
+function removeDefaultMessage() {
+  if (
+    undoneTask.childElementCount > 1 &&
+    document.querySelector(".task-message")
+  ) {
+    const removedElement = document.querySelector(".task-message");
     removedElement.remove();
   }
 }
 
 function createTasks(parentContainer, checkerBox, taskTextHolder) {
   const parentDiv = createParentContainer(parentContainer);
+  parentDiv.classList.add("parent-container");
 
   const checkBox = document.createElement(checkerBox);
   checkBox.setAttribute("type", "checkbox");
@@ -52,7 +66,7 @@ function createTasks(parentContainer, checkerBox, taskTextHolder) {
   parentDiv.append(checkBox, listItem);
   undoneTask.append(parentDiv);
 
-  removeDefaultMessage("task-message");
+  removeDefaultMessage();
 
   persistLocalStorage(listItem, parentDiv);
 }
@@ -81,6 +95,7 @@ function sustainTasks() {
   const localStorageArray = Object.values(localStorage).sort();
   localStorageArray.forEach((Item) => {
     const parentContainer = createParentContainer("div");
+    parentContainer.classList.add("parent-container");
     parentContainer.innerHTML = Item;
 
     if (parentContainer.children[0].getAttribute("data")) {
@@ -110,7 +125,7 @@ fetch(url, options)
       const quote = document.createElement("p");
       quote.innerText = resObject.quote;
 
-      const addressContainer = document.createElement("address");
+      const addressContainer = createParentContainer("p");
       addressContainer.classList.add("author");
 
       const author = document.createElement("a");
@@ -121,7 +136,7 @@ fetch(url, options)
       quote.append(addressContainer);
       quoteContainer.append(quote);
     } else {
-      const holder = document.createElement("p");
+      const holder = createParentContainer("p");
       holder.innerText = "No quotes found.";
 
       quoteContainer.append(holder);
