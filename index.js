@@ -34,9 +34,12 @@ function validateInput(input) {
   return false;
 }
 
-function createParentContainer(parentContainer) {
-  const parentDiv = document.createElement(parentContainer);
-  return parentDiv;
+function createTag(tag, className) {
+  const container = document.createElement(tag);
+  if (className) {
+    container.classList.add(className);
+  }
+  return container;
 }
 
 function removeDefaultMessage() {
@@ -50,16 +53,13 @@ function removeDefaultMessage() {
 }
 
 function createTasks(parentContainer, checkerBox, taskTextHolder) {
-  const parentDiv = createParentContainer(parentContainer);
-  parentDiv.classList.add("parent-container");
+  const parentDiv = createTag(parentContainer, "parent-container");
 
-  const checkBox = document.createElement(checkerBox);
+  const checkBox = createTag(checkerBox, "check-box");
   checkBox.setAttribute("type", "checkbox");
-  checkBox.classList.add("check-box");
 
-  const listItem = document.createElement(taskTextHolder);
+  const listItem = createTag(taskTextHolder, "list-item");
   listItem.innerText = formInput.value;
-  listItem.classList.add("list-item");
 
   const cancelTasks = document.createElement;
 
@@ -77,13 +77,12 @@ function updateTasks(Target) {
 
   if (Target.checked) {
     Target.setAttribute("data", "checked");
-    persistLocalStorage(Target.nextElementSibling, parentContainer);
     completedTask.append(parentContainer);
   } else {
     Target.removeAttribute("data");
-    persistLocalStorage(Target.nextElementSibling, parentContainer);
     undoneTask.append(parentContainer);
   }
+  persistLocalStorage(Target.nextElementSibling, parentContainer);
 }
 
 function persistLocalStorage(key, value) {
@@ -94,8 +93,7 @@ function persistLocalStorage(key, value) {
 function sustainTasks() {
   const localStorageArray = Object.values(localStorage).sort();
   localStorageArray.forEach((Item) => {
-    const parentContainer = createParentContainer("div");
-    parentContainer.classList.add("parent-container");
+    const parentContainer = createTag("div", "parent-container");
     parentContainer.innerHTML = Item;
 
     if (parentContainer.children[0].getAttribute("data")) {
@@ -125,8 +123,7 @@ fetch(url, options)
       const quote = document.createElement("p");
       quote.innerText = resObject.quote;
 
-      const addressContainer = createParentContainer("p");
-      addressContainer.classList.add("author");
+      const addressContainer = createTag("address", "author");
 
       const author = document.createElement("a");
       author.setAttribute("rel", "author");

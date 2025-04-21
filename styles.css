@@ -223,14 +223,14 @@ footer p {
 }
 
 #Quotes p {
-  margin-top: 20px;
+  margin-top: 25px;
   font-size: 30px;
 }
 
 .author {
   text-align: right;
   font-family: var(--heading-font);
-  font-size: 14px;
+  font-size: 16px;
   margin-top: 15px;
   margin-right: 10px;
 }
@@ -239,4 +239,5 @@ footer p {
   content: "-";
   font-size: 16px;
   margin-right: 10px;
+  text-align: center;
 }
