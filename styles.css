@@ -192,6 +192,7 @@ footer p {
 
 .parent-container {
   display: flex;
+  position: relative;
   align-items: center;
   margin-bottom: 20px;
 }
@@ -199,7 +200,7 @@ footer p {
 .list-item {
   list-style: none;
   margin-left: 18px;
-  width: 80%;
+  width: 65%;
   text-wrap: wrap;
   word-wrap: break-word;
 }
@@ -240,4 +241,21 @@ footer p {
   font-size: 16px;
   margin-right: 10px;
   text-align: center;
+}
+
+/* Cancel task feature */
+
+.cancel-container {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cancel-container svg {
+  height: 30px;
+  width: 30px;
 }

@@ -5,6 +5,8 @@ const undoneTask = document.getElementById("undone-tasks");
 const completedTask = document.getElementById("completed-tasks");
 const quoteContainer = document.getElementById("Quotes");
 
+//Event listeners and Async code.
+
 formSubmit.addEventListener("click", (form) => {
   form.preventDefault();
   if (undoneTask.children.length < 10 && validateInput(formInput)) {
@@ -21,11 +23,21 @@ formSubmit.addEventListener("click", (form) => {
 document.getElementById("Tasks").addEventListener("click", (clickObject) => {
   if (clickObject.target.matches(".check-box")) {
     updateTasks(clickObject.target);
+  } else if (clickObject.target.matches("#Capa_1")) {
+    cancelTasks(clickObject);
   }
 });
 
+//Default on website load to perform some expected operations
+
 sustainTasks();
-removeDefaultMessage();
+displayDefaultMessage();
+
+function cancelTasks(taskContainer) {
+  const container = taskContainer.target.parentElement.parentElement;
+  localStorage.removeItem(container.children[1].innerText);
+  container.remove();
+}
 
 function validateInput(input) {
   if (input.value.length > 5 && isNaN(input.value)) {
@@ -33,6 +45,15 @@ function validateInput(input) {
   }
   return false;
 }
+
+function cancelContainer() {
+  const cancelContainer = createTag("div", "cancel-container");
+  cancelContainer.innerHTML =
+    '<?xml version="1.0" ?><svg data-name="Capa 1" id="Capa_1" viewBox="0 0 20 19.84" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><path d="M10.17,10l3.89-3.89a.37.37,0,1,0-.53-.53L9.64,9.43,5.75,5.54a.37.37,0,1,0-.53.53L9.11,10,5.22,13.85a.37.37,0,0,0,0,.53.34.34,0,0,0,.26.11.36.36,0,0,0,.27-.11l3.89-3.89,3.89,3.89a.34.34,0,0,0,.26.11.35.35,0,0,0,.27-.11.37.37,0,0,0,0-.53Z"/></svg>';
+  return cancelContainer;
+}
+
+cancelContainer();
 
 function createTag(tag, className) {
   const container = document.createElement(tag);
@@ -42,13 +63,13 @@ function createTag(tag, className) {
   return container;
 }
 
-function removeDefaultMessage() {
+function displayDefaultMessage() {
+  const displayElement = document.querySelector(".task-message");
   if (
     undoneTask.childElementCount > 1 &&
     document.querySelector(".task-message")
   ) {
-    const removedElement = document.querySelector(".task-message");
-    removedElement.remove();
+    displayElement.remove();
   }
 }
 
@@ -61,12 +82,10 @@ function createTasks(parentContainer, checkerBox, taskTextHolder) {
   const listItem = createTag(taskTextHolder, "list-item");
   listItem.innerText = formInput.value;
 
-  const cancelTasks = document.createElement;
-
-  parentDiv.append(checkBox, listItem);
+  parentDiv.append(checkBox, listItem, cancelContainer());
   undoneTask.append(parentDiv);
 
-  removeDefaultMessage();
+  displayDefaultMessage();
 
   persistLocalStorage(listItem, parentDiv);
 }
@@ -83,6 +102,7 @@ function updateTasks(Target) {
     undoneTask.append(parentContainer);
   }
   persistLocalStorage(Target.nextElementSibling, parentContainer);
+  displayDefaultMessage();
 }
 
 function persistLocalStorage(key, value) {
