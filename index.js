@@ -36,10 +36,8 @@ const completedTask = document.getElementById("completed-tasks");
 const displayElement = document.querySelector(".task-message");
 
 //Default on website load to perform some expected operations
-
-displayDefaultMessage();
 sustainTasks();
-
+displayDefaultMessage();
 //Event listeners and Async code.
 
 formSubmit.addEventListener("click", (form) => {
@@ -114,22 +112,24 @@ function updateTasks(Target) {
     undoneTask.append(parentContainer);
   }
   persistLocalStorage(Target.nextElementSibling, parentContainer);
-  displayDefaultMessage();
 }
 
 function sustainTasks() {
   const localStorageArray = Object.values(localStorage).sort();
-  localStorageArray.forEach((Item) => {
+  localStorageArray.forEach((taskItem) => {
     const parentContainer = createTag("div", "parent-container");
-    parentContainer.innerHTML = Item;
-
-    if (parentContainer.children[0].getAttribute("data")) {
-      parentContainer.children[0].checked = true;
-      completedTask.append(parentContainer);
-    } else {
-      undoneTask.append(parentContainer);
-    }
+    parentContainer.innerHTML = taskItem;
+    taskAppender(parentContainer);
   });
+}
+
+function taskAppender(parentContainer) {
+  if (parentContainer.children[0].getAttribute("data")) {
+    parentContainer.children[0].checked = true;
+    completedTask.append(parentContainer);
+  } else {
+    undoneTask.append(parentContainer);
+  }
 }
 
 // Quotes section
@@ -148,12 +148,12 @@ fetch(url, options)
   .then((res) => res.json())
   .then(function (resObject) {
     if (resObject.quote && resObject.author) {
-      const quote = document.createElement("p");
+      const quote = createTag("p");
       quote.innerText = resObject.quote;
 
       const addressContainer = createTag("address", "author");
 
-      const author = document.createElement("a");
+      const author = createTag("a");
       author.setAttribute("rel", "author");
       author.innerText = resObject.author;
 
