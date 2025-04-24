@@ -161,9 +161,44 @@ fetch(url, options)
       quote.append(addressContainer);
       quoteContainer.append(quote);
     } else {
-      const holder = createParentContainer("p");
+      const holder = createTag("p");
       holder.innerText = "No quotes found.";
 
       quoteContainer.append(holder);
     }
   });
+
+// Sidebar
+
+const menuToggle = document.querySelector(".menu-toggle");
+const sidebar = document.getElementById("sidebar");
+
+menuToggle.addEventListener("click", () => {
+  const nav = menuToggle.closest("nav");
+  if (nav.matches(".nav-expanded")) {
+    setTimeout(() => {
+      sidebar.classList.add("hide-display");
+    }, 800);
+    nav.classList.remove("nav-expanded");
+  } else {
+    sidebar.classList.remove("hide-display");
+    nav.classList.add("nav-expanded");
+  }
+
+  menuToggle.classList.toggle("menu-toggle-on");
+});
+
+function clearLocalStorage() {
+  totalTasksArray = [...undoneTask.children, ...completedTask.children];
+  let iterator = 0;
+  if (totalTasksArray[0].getAttribute("class") === "task-message") {
+    iterator++;
+  }
+
+  for (iterator; iterator < totalTasksArray.length; iterator++) {
+    totalTasksArray[iterator].remove();
+  }
+
+  localStorage.clear();
+  displayDefaultMessage();
+}
