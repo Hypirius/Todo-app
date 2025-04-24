@@ -13,6 +13,7 @@
   --lowerheading-font: "Special Gothic Condensed One", sans-serif;
   --divider-color: #353839;
   --heading-size: 24px;
+  --heading-weight: 600;
 }
 
 body {
@@ -225,6 +226,7 @@ footer p {
 #Quotes {
   padding: 20px;
   text-align: center;
+  overflow-y: scroll;
 }
 
 #Quotes h4 {
@@ -279,6 +281,7 @@ nav {
 }
 nav {
   position: absolute;
+  z-index: 999;
   top: 0;
   left: 0;
   transition: width 1s ease-in-out;
@@ -348,4 +351,13 @@ nav {
   background-color: inherit;
   border: none;
   cursor: pointer;
+}
+
+/* Time section */
+
+#time-section h3,
+#time-section h3 span {
+  font-size: var(--heading-size);
+  font-weight: var(--heading-weight);
+  font-family: var(--heading-font);
 }

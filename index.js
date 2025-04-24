@@ -38,6 +38,7 @@ const displayElement = document.querySelector(".task-message");
 //Default on website load to perform some expected operations
 sustainTasks();
 displayDefaultMessage();
+clockTimer();
 //Event listeners and Async code.
 
 formSubmit.addEventListener("click", (form) => {
@@ -201,4 +202,21 @@ function clearLocalStorage() {
 
   localStorage.clear();
   displayDefaultMessage();
+}
+
+// Time section
+function clockTimer() {
+  const timeSection = document.getElementById("time-section");
+  getCurrentTime(timeSection);
+  setInterval(() => {
+    getCurrentTime(timeSection);
+  }, 60000);
+}
+
+function getCurrentTime(timeSection) {
+  const time = new Date().toLocaleTimeString();
+  timeSection.children[0].innerText = `${time.slice(
+    0,
+    time.lastIndexOf(":")
+  )} ${time.slice(-2)}`;
 }
