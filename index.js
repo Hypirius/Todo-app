@@ -166,6 +166,7 @@ fetch(url, options)
       holder.innerText = "No quotes found.";
 
       quoteContainer.append(holder);
+      console.log(resObject);
     }
   });
 
