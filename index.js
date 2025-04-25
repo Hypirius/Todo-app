@@ -173,21 +173,41 @@ fetch(url, options)
 
 const menuToggle = document.querySelector(".menu-toggle");
 const sidebar = document.getElementById("sidebar");
+const media = matchMedia("(max-width: 608px)");
 
 menuToggle.addEventListener("click", () => {
+  if (media.matches) {
+    menuToggler("nav-expanded-vertical");
+  } else {
+    menuToggler("nav-expanded");
+  }
+});
+// Media Queries and responsive design.
+media.addEventListener("change", () => {
   const nav = menuToggle.closest("nav");
-  if (nav.matches(".nav-expanded")) {
+  if (nav.matches(".nav-expanded-vertical")) {
+    nav.classList.remove("nav-expanded-vertical");
+    nav.classList.add("nav-expanded");
+  } else if (nav.matches(".nav-expanded")) {
+    nav.classList.remove("nav-expanded");
+    nav.classList.add("nav-expanded-vertical");
+  }
+});
+
+function menuToggler(toggleClass) {
+  const nav = menuToggle.closest("nav");
+  if (nav.matches(`.${toggleClass}`)) {
     setTimeout(() => {
       sidebar.classList.add("hide-display");
     }, 800);
-    nav.classList.remove("nav-expanded");
+    nav.classList.remove(toggleClass);
   } else {
     sidebar.classList.remove("hide-display");
-    nav.classList.add("nav-expanded");
+    nav.classList.add(toggleClass);
   }
 
   menuToggle.classList.toggle("menu-toggle-on");
-});
+}
 
 function clearLocalStorage() {
   totalTasksArray = [...undoneTask.children, ...completedTask.children];
